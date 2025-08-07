@@ -1,5 +1,9 @@
 export class TryTestingThisLocators {
 
+    getHomePage() {
+        return cy.get('[href="/"]')
+    }
+
     getFirstName() {
         return cy.get('input[type="text"][name="fname"]')
     }
@@ -30,5 +34,33 @@ export class TryTestingThisLocators {
 
     getFlavorInput() {
         return cy.get('[list="datalists"]')
+    }
+
+    getColorInput() {
+        return cy.get('#favcolor');
+    }
+
+    getDateField() {
+        return cy.get('input[type="date"][name="day"]')
+    }
+
+    getRangeSlider() {
+        return cy.get('input[type="range"]')
+    }
+
+    getFileUploadOption() {
+        return cy.get('input[type="file"][id="myfile"]')
+    }
+
+    getQuantity() {
+        return cy.get('input[type="number"][id="quantity"]')
+    }
+
+    getLongMsg() {
+        return cy.get('textarea[name="message"]')
+    }
+
+    getAlertBtn() {
+        return cy.get('button[onclick="alertfunction()"]')
     }
 }
