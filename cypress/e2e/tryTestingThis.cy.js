@@ -11,18 +11,21 @@ var checkboxValue = 'Option 2'
 var optionsToCheck = ['Option 1', 'Option 3']
 var flavor = 'Banana'
 var fileToUpload = 'example.json'
-var qty = 4
+var qty = 3
 var longmsg = 'SQA stands for Software Quality Assurance'
 
-describe('Try Testing This Website', function () {
+var username = 'test'
+var password = 'test'
 
-    // beforeEach(function () {
-    //     cy.visit('https://trytestingthis.netlify.app/')
-    // })
+describe('End to End Full Journey', function () {
 
-    it('Form Filling', () => {
-
+    beforeEach(function () {
         cy.visit('https://trytestingthis.netlify.app/')
+    })
+
+    it('Form Filling and Submission', () => {
+
+        tryTestingThisActions.clickContactPage()
         tryTestingThisActions.clickHomepage()
         tryTestingThisActions.enterFirstName(firstname)
         tryTestingThisActions.enterLastname(lastname)
@@ -44,13 +47,13 @@ describe('Try Testing This Website', function () {
         tryTestingThisActions.selectFlavor(flavor)
 
         tryTestingThisActions.setColorByHex('#ff5733')
-        cy.wait(2500)
-        tryTestingThisActions.setColorByRGB(0, 206, 209)
-        cy.wait(2500)
+        cy.wait(2000)
+        tryTestingThisActions.setColorByRGB(0, 145, 240)
+        cy.wait(2000)
         tryTestingThisActions.setRandomColor()
 
-        tryTestingThisActions.enterDate('2025-08-07')
-        tryTestingThisActions.setRangeSlider(63)
+        tryTestingThisActions.enterDate('2025-08-11')
+        tryTestingThisActions.setRangeSlider(67)
 
         tryTestingThisActions.uploadFile(fileToUpload)
         tryTestingThisActions.setQuantity(qty)
@@ -59,6 +62,21 @@ describe('Try Testing This Website', function () {
 
         tryTestingThisActions.clickOnAlertButton()
 
+        tryTestingThisActions.clickOnDblButton()
+        tryTestingThisActions.controlLeftDivScroll('top')
+        tryTestingThisActions.findPhoto()
+        tryTestingThisActions.controlLeftDivScroll('center')
+        tryTestingThisActions.dragAndDropImg('#div1')
+
+        tryTestingThisActions.clickOnSubmitBtn()
+    })
+
+    it('Login with Valid Credentials', ()=> {
+
+        tryTestingThisActions.enterUsername(username)
+        tryTestingThisActions.enterPassword(password)
+        tryTestingThisActions.clickOnLoginBtn()
+        tryTestingThisActions.clickHomepage()
 
     })
 

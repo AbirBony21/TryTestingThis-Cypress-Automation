@@ -1,7 +1,7 @@
 export class TryTestingThisLocators {
 
     getHomePage() {
-        return cy.get('[href="/"]')
+        return cy.get('[class="button bar-item"][href="/"]')
     }
 
     getFirstName() {
@@ -63,4 +63,41 @@ export class TryTestingThisLocators {
     getAlertBtn() {
         return cy.get('button[onclick="alertfunction()"]')
     }
+
+    getContactPage() {
+        return cy.get('[href="/contact"]')
+    }
+
+    getDblClickBtn() {
+        return cy.get('[ondblclick="myFunction()"]')
+    }
+
+    getLeftDivScroll() {
+        return cy.get('div.side.ex1')
+    }
+
+    getImage() {
+        return cy.get('.fakeimg')
+    }
+
+    dragImage() {
+        return cy.get('#drag1')
+    }
+
+    getUsernameInputfield() {
+        return cy.get('input[type="text"][id="uname"]')
+    }
+
+    getPasswordinputfield() {
+        return cy.get('input[type="text"][id="pwd"]')
+    }
+
+    getLoginButton() {
+        return cy.get('input[type="submit"][value="Login"]')
+    }
+
+    getSubmitButton() {
+        return cy.get('button[class="btn btn-success"]')
+    }
+
 }
