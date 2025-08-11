@@ -103,4 +103,41 @@ export class TryTestingThisActions {
     clickOnAlertButton(){
         this.trytestingthislocators.getAlertBtn().click()
     }
+
+    clickContactPage() {
+        this.trytestingthislocators.getContactPage().click()
+    }
+
+    clickOnDblButton() {
+        this.trytestingthislocators.getDblClickBtn().dblclick()
+    }
+
+    controlLeftDivScroll(position) {
+        this.trytestingthislocators.getLeftDivScroll().scrollTo(position)
+    }
+
+    findPhoto() {
+        this.trytestingthislocators.getImage()
+    }
+
+    dragAndDropImg(dropPos) {
+        this.trytestingthislocators.dragImage().drag(dropPos)
+    }
+
+    enterUsername(username) {
+        this.trytestingthislocators.getUsernameInputfield().type(username)
+    }
+
+    enterPassword(password) {
+        this.trytestingthislocators.getPasswordinputfield().type(password)
+    }
+
+    clickOnLoginBtn() {
+        this.trytestingthislocators.getLoginButton().click()
+    }
+
+    clickOnSubmitBtn() {
+        this.trytestingthislocators.getSubmitButton().click()
+    }
+
 }
