@@ -40,9 +40,32 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getCheckboxValue(value).uncheck()
     }
 
+    findFlavor() {
+        return this.trytestingthislocators.getFlavorInput()
+    }
+
     selectFlavor(flavor) {
         this.trytestingthislocators.getFlavorInput().type(flavor)
     }
+
+    selectFlavorByPartial(guess) {
+
+        this.trytestingthislocators.getFlavorInput().clear().type(guess);
+        this.trytestingthislocators.getDatalistOptions().then(options => {
+
+            const optionValues = [...options].map(o => o.value);
+            const match = optionValues.find(val =>
+                val.toLowerCase().startsWith(guess.toLowerCase())
+            );
+
+            if (match) {
+                this.trytestingthislocators.getFlavorInput().clear().type(match);
+            } else {
+                this.trytestingthislocators.getFlavorInput().clear().type(guess);
+            }
+        });
+    }
+
 
     setColorByHex(hexCode) {
         this.trytestingthislocators.getColorInput()
@@ -77,30 +100,34 @@ export class TryTestingThisActions {
             .trigger('change')
     }
 
-    setRangeSlider(slidervalue){
+    getRangeSliderValue() {
+        return this.trytestingthislocators.getRangeSlider().invoke('val')
+    }
+
+    setRangeSlider(slidervalue) {
         this.trytestingthislocators.getRangeSlider()
             .invoke('val', slidervalue)
             .trigger('input')
             .trigger('change')
     }
 
-    uploadFile(fileToUpload){
+    uploadFile(fileToUpload) {
         this.trytestingthislocators.getFileUploadOption().attachFile(fileToUpload)
     }
 
-    setQuantity(qty){
+    setQuantity(qty) {
         this.trytestingthislocators.getQuantity().type(qty)
     }
 
-    clearLongMsgField(){
+    clearLongMsgField() {
         this.trytestingthislocators.getLongMsg().clear()
     }
 
-    enterLongMsg(longmsg){
+    enterLongMsg(longmsg) {
         this.trytestingthislocators.getLongMsg().type(longmsg)
     }
 
-    clickOnAlertButton(){
+    clickOnAlertButton() {
         this.trytestingthislocators.getAlertBtn().click()
     }
 
@@ -138,6 +165,58 @@ export class TryTestingThisActions {
 
     clickOnSubmitBtn() {
         this.trytestingthislocators.getSubmitButton().click()
+    }
+
+    stubWindowOpen() {
+        cy.window().then(win => {
+            cy.stub(win, 'open').as('windowOpen');
+        });
+    }
+
+    checkWindowOpenCalledWith(url, tab) {
+        cy.get('@windowOpen').should('be.calledWith', url, tab)
+    }
+
+    checkMaleRadioBtn() {
+        return this.trytestingthislocators.getMaleRadioBtn()
+    }
+
+    checkFemaleRadioBtn() {
+        return this.trytestingthislocators.getFemaleRadioBtn()
+    }
+
+    checkOtherRadioBtn() {
+        return this.trytestingthislocators.getOtherRadioBtn()
+    }
+
+    checkDropdownOptions(expectedOptions) {
+        this.trytestingthislocators.getOptionDropdown()
+            .find('option')
+            .then(options => {
+                const actualOptions = [...options].map(o => o.text.trim())
+                expect(actualOptions).to.have.members(expectedOptions)
+            });
+    }
+
+    checkDatalistOptions(expectedDatalistOptions) {
+        this.trytestingthislocators.getDatalistOptions()
+            .then(options => {
+                const actualOptions = [...options].map(o => o.value.trim())
+                expect(actualOptions).to.have.members(expectedDatalistOptions)
+            });
+    }
+
+    checkCurrentURL(expectedURL) {
+        this.trytestingthislocators.getCurrentURL().should('equal', expectedURL)
+    }
+
+    checkDescriptionDate(expectedDate) {
+        this.trytestingthislocators.getTableDescription()
+            .invoke('text')
+            .then(text => {
+                const datePart = text.split(',').slice(1).join(',').trim();
+                expect(datePart).to.equal(expectedDate);
+            })
     }
 
 }
