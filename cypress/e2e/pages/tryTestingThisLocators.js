@@ -36,6 +36,11 @@ export class TryTestingThisLocators {
         return cy.get('[list="datalists"]')
     }
 
+    getDatalistOptions() {
+        return cy.get('#datalists').find('option');
+    }
+
+
     getColorInput() {
         return cy.get('#favcolor');
     }
@@ -98,6 +103,14 @@ export class TryTestingThisLocators {
 
     getSubmitButton() {
         return cy.get('button[class="btn btn-success"]')
+    }
+
+    getCurrentURL() {
+        return cy.url()
+    }
+
+    getTableDescription() {
+        return cy.get('.main > h5')
     }
 
 }
