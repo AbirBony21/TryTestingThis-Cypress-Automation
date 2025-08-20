@@ -69,6 +69,10 @@ export class TryTestingThisLocators {
         return cy.get('button[onclick="alertfunction()"]')
     }
 
+    getAlertMsg() {
+        return cy.get('.pop-up-alert > #demo')
+    }
+
     getContactPage() {
         return cy.get('[href="/contact"]')
     }
@@ -85,8 +89,12 @@ export class TryTestingThisLocators {
         return cy.get('.fakeimg')
     }
 
-    dragImage() {
+    getdragImage() {
         return cy.get('#drag1')
+    }
+
+    getdropbox() {
+        return cy.get('#div1')
     }
 
     getUsernameInputfield() {
@@ -99,6 +107,10 @@ export class TryTestingThisLocators {
 
     getLoginButton() {
         return cy.get('input[type="submit"][value="Login"]')
+    }
+
+    getLoginSuccessMsg() {
+        return cy.get('.main h2')
     }
 
     getSubmitButton() {

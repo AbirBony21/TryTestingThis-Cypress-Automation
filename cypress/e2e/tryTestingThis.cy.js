@@ -8,7 +8,7 @@ const tryTestingThisActions = new TryTestingThisActions()
 
 var firstname = 'Md. Abir'
 var lastname = 'Hossain'
-var gender = 'Male'
+// var gender = 'Male'
 var optionSelectDropdown = 'Option 3'
 var checkboxValue = 'Option 2'
 var optionsToCheck = ['Option 1', 'Option 3']
@@ -21,74 +21,75 @@ var longmsg = 'SQA stands for Software Quality Assurance'
 var username = 'test'
 var password = 'test'
 
+const genderOptions = ['Male', 'Female', 'Other']
 const expectedOptions = ['Option', 'Option 1', 'Option 2', 'Option 3']
 const expectedOptionsCb = ['Option 1', 'Option 2', 'Option 3']
 const expectedDatalistOptions = ['Chocolate', 'Vanilla', 'Strawberry', 'Mint', 'Banana']
 
-describe('End to End Full Journey', function () {
+// describe('End to End Full Journey', function () {
 
-    beforeEach(function () {
-        cy.visit('https://trytestingthis.netlify.app/')
-    })
+//     beforeEach(function () {
+//         cy.visit('https://trytestingthis.netlify.app/')
+//     })
 
-    it('Form Filling and Submission', () => {
+//     it('Form Filling and Submission', () => {
 
-        tryTestingThisActions.clickContactPage()
-        tryTestingThisActions.clickHomepage()
-        tryTestingThisActions.enterFirstName(firstname)
-        tryTestingThisActions.enterLastname(lastname)
-        tryTestingThisActions.selectGender(gender)
-        tryTestingThisActions.selectOptionDropdown(optionSelectDropdown)
+//         tryTestingThisActions.clickContactPage()
+//         tryTestingThisActions.clickHomepage()
+//         tryTestingThisActions.enterFirstName(firstname)
+//         tryTestingThisActions.enterLastname(lastname)
+//         tryTestingThisActions.selectGender(gender)
+//         tryTestingThisActions.selectOptionDropdown(optionSelectDropdown)
 
-        //Single option check-uncheck
-        tryTestingThisActions.checkOption(checkboxValue)
-        cy.wait(3000)
-        tryTestingThisActions.uncheckOption(checkboxValue)
+//         //Single option check-uncheck
+//         tryTestingThisActions.checkOption(checkboxValue)
+//         cy.wait(3000)
+//         tryTestingThisActions.uncheckOption(checkboxValue)
 
-        //For Multiple Selections
-        optionsToCheck.forEach(checkboxOptionValue => {
-            cy.then(() => {
-                tryTestingThisActions.checkOption(checkboxOptionValue)
-            })
-        });
+//         //For Multiple Selections
+//         optionsToCheck.forEach(checkboxOptionValue => {
+//             cy.then(() => {
+//                 tryTestingThisActions.checkOption(checkboxOptionValue)
+//             })
+//         });
 
-        tryTestingThisActions.selectFlavor(flavor)
+//         tryTestingThisActions.selectFlavor(flavor)
 
-        tryTestingThisActions.setColorByHex('#ff5733')
-        cy.wait(2000)
-        tryTestingThisActions.setColorByRGB(0, 145, 240)
-        cy.wait(2000)
-        tryTestingThisActions.setRandomColor()
+//         tryTestingThisActions.setColorByHex('#ff5733')
+//         cy.wait(2000)
+//         tryTestingThisActions.setColorByRGB(0, 145, 240)
+//         cy.wait(2000)
+//         tryTestingThisActions.setRandomColor()
 
-        tryTestingThisActions.enterDate(dateval)
-        tryTestingThisActions.setRangeSlider(67)
+//         tryTestingThisActions.enterDate(dateval)
+//         tryTestingThisActions.setRangeSlider(67)
 
-        tryTestingThisActions.uploadFile(fileToUpload)
-        tryTestingThisActions.setQuantity(qty)
-        tryTestingThisActions.clearLongMsgField()
-        tryTestingThisActions.enterLongMsg(longmsg)
+//         tryTestingThisActions.uploadFile(fileToUpload)
+//         tryTestingThisActions.setQuantity(qty)
+//         tryTestingThisActions.clearLongMsgField()
+//         tryTestingThisActions.enterLongMsg(longmsg)
 
-        tryTestingThisActions.clickOnAlertButton()
+//         tryTestingThisActions.clickOnAlertButton()
 
-        tryTestingThisActions.clickOnDblButton()
-        tryTestingThisActions.controlLeftDivScroll('top')
-        tryTestingThisActions.findPhoto()
-        tryTestingThisActions.controlLeftDivScroll('center')
-        tryTestingThisActions.dragAndDropImg('#div1')
+//         tryTestingThisActions.clickOnDblButton()
+//         tryTestingThisActions.controlLeftDivScroll('top')
+//         tryTestingThisActions.findPhoto()
+//         tryTestingThisActions.controlLeftDivScroll('center')
+//         tryTestingThisActions.dragAndDropImg('#div1')
 
-        tryTestingThisActions.clickOnSubmitBtn()
-    })
+//         tryTestingThisActions.clickOnSubmitBtn()
+//     })
 
-    it('Successful Login Journey', () => {
+//     it('Successful Login Journey', () => {
 
-        tryTestingThisActions.enterUsername(username)
-        tryTestingThisActions.enterPassword(password)
-        tryTestingThisActions.clickOnLoginBtn()
-        tryTestingThisActions.clickHomepage()
+//         tryTestingThisActions.enterUsername(username)
+//         tryTestingThisActions.enterPassword(password)
+//         tryTestingThisActions.clickOnLoginBtn()
+//         tryTestingThisActions.clickHomepage()
 
-    })
+//     })
 
-})
+// })
 
 describe('Elements test', function () {
 
@@ -99,6 +100,7 @@ describe('Elements test', function () {
     // Layout One
     it('Verify OK Button action for Sample Alert Button', () => {
         tryTestingThisActions.clickOnAlertButton()
+        tryTestingThisActions.getAlertMessage().should('have.text', 'You Pressed the OK Button!')
     })
 
     // it('Verify Cancel Button action for Sample Alert Button', ()=> {
@@ -107,16 +109,25 @@ describe('Elements test', function () {
 
     it('Verify that the image is fetched to the webpage', () => {
         tryTestingThisActions.findPhoto()
+            .should('be.visible')
+            .and('contains.text', 'Image')
     })
 
     it('Verify sample Double Click functionality', () => {
         tryTestingThisActions.clickOnDblButton()
         tryTestingThisActions.controlLeftDivScroll('top')
+        tryTestingThisActions.getAlertMessage().should('have.text', 'Your Sample Double Click worked!')
     })
 
-    it('Verify image drag and drop functionality into specific box', () => {
+    it('Validate image drag and drop functionality into specific box', () => {
         tryTestingThisActions.controlLeftDivScroll('center')
         tryTestingThisActions.dragAndDropImg('#div1')
+
+        tryTestingThisActions.dropboxState()
+            .find('#drag1')
+            .should('exist')
+            .and('be.visible')
+            .and('have.attr', 'src', 'pizza.gif')
     })
 
     it('Verify that login section takes Username and Password as input', () => {
@@ -124,67 +135,94 @@ describe('Elements test', function () {
         // cy.scrollTo('center')
         tryTestingThisActions.enterUsername(username)
         tryTestingThisActions.enterPassword(password)
+        tryTestingThisActions.getUsernameInputText()
+            .should('have.value', username)
+        tryTestingThisActions.getPasswordInputText()
+            .should('have.value', password)
     })
 
-    it('Verify Login functionality with valid credentials', () => {
+    it('Verify Successful Login with valid credentials', () => {
         tryTestingThisActions.controlLeftDivScroll('bottom')
-        // cy.scrollTo('center')
         tryTestingThisActions.enterUsername(username)
         tryTestingThisActions.enterPassword(password)
         tryTestingThisActions.clickOnLoginBtn()
+        tryTestingThisActions.getLoginSuccessMessage()
+            .should('contains.text', 'Login Successful :)')
     })
 
     it('Verify that invalid credentials prevent login and refreshes page', () => {
-        tryTestingThisActions.controlLeftDivScroll('bottom')
-        // cy.scrollTo('center')
-        tryTestingThisActions.enterUsername('asd')
-        tryTestingThisActions.enterPassword(password)
-        tryTestingThisActions.clickOnLoginBtn()
 
-        cy.wait(2500)
         tryTestingThisActions.controlLeftDivScroll('bottom')
-        // cy.scrollTo('center')
-        tryTestingThisActions.enterUsername(username)
-        tryTestingThisActions.enterPassword('qwe')
-        tryTestingThisActions.clickOnLoginBtn()
+        const invalidCred = [
+            { uname: 'asd', pass: password },
+            { uname: username, pass: 'qwe' },
+            { uname: 'asd12', pass: 'qwe34' }
+        ]
 
-        cy.wait(2500)
-        tryTestingThisActions.controlLeftDivScroll('bottom')
-        // cy.scrollTo('center')
-        tryTestingThisActions.enterUsername('asd12')
-        tryTestingThisActions.enterPassword('qwe34')
-        tryTestingThisActions.clickOnLoginBtn()
+        invalidCred.forEach(cred => {
+            tryTestingThisActions.enterUsername(cred.uname)
+            tryTestingThisActions.enterPassword(cred.pass)
+            tryTestingThisActions.clickOnLoginBtn()
+
+            tryTestingThisActions.getUsernameInputText().should('have.value', '')
+            tryTestingThisActions.getPasswordInputText().should('have.value', '')
+        })
     })
 
     it('Verify that successful login loads a new page', () => {
         tryTestingThisActions.controlLeftDivScroll('bottom')
-        // cy.scrollTo('center')
         tryTestingThisActions.enterUsername(username)
         tryTestingThisActions.enterPassword(password)
         tryTestingThisActions.clickOnLoginBtn()
+        tryTestingThisActions.checkLoggedinURL('https://trytestingthis.netlify.app/login.html?uname=test&pwd=test')
     })
 
-    it('Verify that clicking "here" link routes back to homepage with an empty form', () => {
+    it('Verify that clicking "here" link redirects to homepage with an empty form', () => {
         tryTestingThisActions.enterUsername(username)
         tryTestingThisActions.enterPassword(password)
         tryTestingThisActions.clickOnLoginBtn()
         tryTestingThisActions.clickHomepage()
+        tryTestingThisActions.checkCurrentURL('https://trytestingthis.netlify.app/')
     })
 
     //Layout Two
     it('Verify that the form takes Firstname and Lastname as input', () => {
         tryTestingThisActions.enterFirstName(firstname)
         tryTestingThisActions.enterLastname(lastname)
+        tryTestingThisActions.getFirstNameInputText()
+            .should('have.value', firstname)
+        tryTestingThisActions.getLasttNameInputText()
+            .should('have.value', lastname)
     })
 
-    it('Verify radio button functionality for gender selection', () => {
+    it('Validate radio button functionality for gender selection', () => {
+        var gender = utilities.getRandomValue(genderOptions)
         tryTestingThisActions.selectGender(gender)
+        if (gender === 'Male') {
+            tryTestingThisActions.assertMaleRadioBtn()
+        } else if (gender === 'Female') {
+            tryTestingThisActions.assertFemaleRadioBtn()
+        } else {
+            tryTestingThisActions.assertOtherRadioBtn()
+        }
     })
 
-    it('Verify that only one gender can be selected from gender options', () => {
-        tryTestingThisActions.selectGender('Male')
-        tryTestingThisActions.selectGender('Female')
-        tryTestingThisActions.checkMaleRadioBtn().should('not.be.checked')
+    it.only('Verify that only one gender can be selected at a time from gender options', () => {
+        var gender = utilities.getRandomValue(genderOptions)
+        tryTestingThisActions.selectGender(gender)
+
+        const firstGender = utilities.getRandomValue(genderOptions);
+        tryTestingThisActions.selectGender(firstGender);
+        tryTestingThisActions.assertGenderSelected(firstGender);
+
+        const remainingGenders = genderOptions.filter(g => g !== firstGender);
+        const secondGender = utilities.getRandomValue(remainingGenders);
+        tryTestingThisActions.selectGender(secondGender);
+        tryTestingThisActions.assertGenderSelected(secondGender);
+        tryTestingThisActions.assertGenderNotSelected(firstGender);
+
+        const thirdGender = remainingGenders.filter(g => g !== secondGender)[0];
+        tryTestingThisActions.assertGenderNotSelected(thirdGender);
     })
 
     it('Verify that "Option" dropdown loads valid options', () => {
@@ -262,7 +300,7 @@ describe('Elements test', function () {
     it('Verify that clicking "Submit" button opens a new google search tab', () => {
         tryTestingThisActions.stubWindowOpen()
         tryTestingThisActions.clickOnSubmitBtn()
-        tryTestingThisActions.checkWindowOpenCalledWith('http://google.com','_blank')
+        tryTestingThisActions.checkWindowOpenCalledWith('http://google.com', '_blank')
     })
 
     it('Verify that "Home" button in navbar routes to homepage upon clicking', () => {
@@ -276,12 +314,12 @@ describe('Elements test', function () {
     })
 
     //Layout Three
-    it.only('Verify that Date is shown correctly in table description', () => {
+    it('Verify that Date is shown correctly in table description', () => {
         var expectedDate = 'Sep 2, 2017'
         tryTestingThisActions.checkDescriptionDate(expectedDate)
     })
-    
-    
+
+
 
 
 
