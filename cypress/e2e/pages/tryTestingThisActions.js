@@ -18,6 +18,14 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getLastName().type(lastname)
     }
 
+    getFirstNameInputText() {
+        return this.trytestingthislocators.getFirstName()
+    }
+
+    getLasttNameInputText() {
+        return this.trytestingthislocators.getLastName()
+    }
+
     selectGender(gender) {
         if (gender === 'Male') {
             this.trytestingthislocators.getMaleRadioBtn().check()
@@ -131,6 +139,22 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getAlertBtn().click()
     }
 
+    handleAlertPopup() {
+        cy.on('window:alert', (txt) => {
+            expect(txt).to.equal('Press a button!')
+        });
+    }
+
+    getAlertMessage() {
+        return this.trytestingthislocators.getAlertMsg()
+    }
+
+    // wrongCredAlertPopUp() {
+    //     cy.on('window:alert', (txt) => {
+    //         expect(txt).to.equal('Wrong Credentials! Try again!')
+    //     });
+    // }
+
     clickContactPage() {
         this.trytestingthislocators.getContactPage().click()
     }
@@ -144,11 +168,15 @@ export class TryTestingThisActions {
     }
 
     findPhoto() {
-        this.trytestingthislocators.getImage()
+        return this.trytestingthislocators.getImage()
     }
 
     dragAndDropImg(dropPos) {
-        this.trytestingthislocators.dragImage().drag(dropPos)
+        this.trytestingthislocators.getdragImage().drag(dropPos)
+    }
+
+    dropboxState() {
+        return this.trytestingthislocators.getdropbox()
     }
 
     enterUsername(username) {
@@ -159,8 +187,24 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getPasswordinputfield().type(password)
     }
 
+    getUsernameInputText() {
+        return this.trytestingthislocators.getUsernameInputfield()
+    }
+
+    getPasswordInputText() {
+        return this.trytestingthislocators.getPasswordinputfield()
+    }
+
     clickOnLoginBtn() {
         this.trytestingthislocators.getLoginButton().click()
+    }
+
+    getLoginSuccessMessage() {
+        return this.trytestingthislocators.getLoginSuccessMsg()
+    }
+
+    checkLoggedinURL(expectedURL) {
+        this.trytestingthislocators.getCurrentURL().should('equal', expectedURL)
     }
 
     clickOnSubmitBtn() {
@@ -177,16 +221,24 @@ export class TryTestingThisActions {
         cy.get('@windowOpen').should('be.calledWith', url, tab)
     }
 
-    checkMaleRadioBtn() {
-        return this.trytestingthislocators.getMaleRadioBtn()
+    assertGenderSelected(gender) {
+        if (gender === 'Male') {
+            this.trytestingthislocators.getMaleRadioBtn().should('be.checked');
+        } else if (gender === 'Female') {
+            this.trytestingthislocators.getFemaleRadioBtn().should('be.checked');
+        } else {
+            this.trytestingthislocators.getOtherRadioBtn().should('be.checked');
+        }
     }
 
-    checkFemaleRadioBtn() {
-        return this.trytestingthislocators.getFemaleRadioBtn()
-    }
-
-    checkOtherRadioBtn() {
-        return this.trytestingthislocators.getOtherRadioBtn()
+    assertGenderNotSelected(gender) {
+        if (gender === 'Male') {
+            this.trytestingthislocators.getMaleRadioBtn().should('not.be.checked');
+        } else if (gender === 'Female') {
+            this.trytestingthislocators.getFemaleRadioBtn().should('not.be.checked');
+        } else {
+            this.trytestingthislocators.getOtherRadioBtn().should('not.be.checked');
+        }
     }
 
     checkDropdownOptions(expectedOptions) {
