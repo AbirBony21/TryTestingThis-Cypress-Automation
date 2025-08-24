@@ -15,8 +15,8 @@ var checkboxValue = 'Option 2'
 var optionsToCheck = []
 var flavor = 'Banana'
 var fileToUpload = 'example.json'
-var dateval = '2025-08-11'
-var qty = 3
+// var dateval = '2025-08-11'
+// var qty = 3
 var longmsg = 'SQA stands for Software Quality Assurance'
 
 var username = 'test'
@@ -245,9 +245,9 @@ describe('Elements test', function () {
 
     it('Verify that multiple options can be checked for applicable Options', () => {
 
-        var twoOrThree = utilities.getRandomNumber(2,3)
+        var twoOrThree = utilities.getRandomNumber(2, 3)
         if (twoOrThree == 2) {
-            optionsToCheck = Cypress._.sampleSize(expectedOptionsCb,2)
+            optionsToCheck = Cypress._.sampleSize(expectedOptionsCb, 2)
         } else {
             optionsToCheck = [...expectedOptionsCb]
         }
@@ -255,29 +255,34 @@ describe('Elements test', function () {
         tryTestingThisActions.checkMultipleOptions(optionsToCheck)
     })
 
-    it.only('Verify that datalist input dropdown shows valid suggestions', () => {
+    it('Verify that datalist input dropdown shows valid suggestions', () => {
         tryTestingThisActions.checkDatalistOptions(expectedDatalistOptions)
     })
 
     it('Verify that partially given input is guessed correctly in Datalist', () => {
-        var guess = 'stra'
-        tryTestingThisActions.selectFlavorByPartial(guess)
+        tryTestingThisActions.selectFlavorByPartial()
     })
 
     it('Verify color picking by HEX input', () => {
-        tryTestingThisActions.setColorByHex('#ff5733')
+        var hexCode = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+        tryTestingThisActions.setColorByHex(hexCode);
     })
 
     it('Verify that input RGB values are accepted for picking color', () => {
-        tryTestingThisActions.setColorByRGB(0, 145, 240)
+        var red = utilities.getRandomNumber(0, 255)
+        var green = utilities.getRandomNumber(0, 255)
+        var blue = utilities.getRandomNumber(0, 255)
+        tryTestingThisActions.setColorByRGB(red, green, blue)
     })
 
-    it('Verify random color pick functionality', () => {
-        tryTestingThisActions.setRandomColor()
-    })
+    // it('Verify random color pick functionality', () => {
+    //     tryTestingThisActions.setRandomColor()
+    // })
 
     it('Verify Date picker functionality', () => {
-        tryTestingThisActions.enterDate(dateval)
+        var randomDate = tryTestingThisActions.enterRandomDate()
+        tryTestingThisActions.getDateFieldValue()
+            .should('have.value', randomDate)
     })
 
     it('Verify that range slider value is set to 50 by default', () => {
@@ -286,17 +291,23 @@ describe('Elements test', function () {
 
     it('Verify that range slider accepts values from 0 to 100', () => {
         var randomNum = utilities.getRandomNumber(0, 100)
-        tryTestingThisActions.setRangeSlider(randomNum)
+        var valSlider = tryTestingThisActions.setRangeSlider(randomNum)
+        tryTestingThisActions.getRangeSliderValue().should('equal', String(randomNum))
     })
 
     it('Verify file upload functionality of the form', () => {
         tryTestingThisActions.uploadFile(fileToUpload)
+            .should('have.value', `C:\\fakepath\\${fileToUpload}`)
     })
 
-    it('Verify that Quantity input field accepts integer values from 1 to 5', () => {
-        // For Later Modification
+    it.only('Verify that Quantity input field accepts integer values from 1 to 5', () => {
+
+        var qty = utilities.getRandomNumber(1, 5)
         tryTestingThisActions.setQuantity(qty)
+            .should('have.value', String(qty))
     })
+
+    //continue from here
 
     it('Verify that long message field can take more than 255 characters as input', () => {
         var msglength = utilities.getRandomNumber(256, 400)
