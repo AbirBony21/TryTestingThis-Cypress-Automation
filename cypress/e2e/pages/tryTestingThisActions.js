@@ -71,56 +71,72 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getFlavorInput().type(flavor)
     }
 
-    selectFlavorByPartial(guess) {
+    selectFlavorByPartial() {
 
-        this.trytestingthislocators.getFlavorInput().clear().type(guess);
-        this.trytestingthislocators.getDatalistOptions().then(options => {
+        this.trytestingthislocators.getDatalistOptions().then($options => {
+            var optionValues = Cypress._.map($options, 'value')
+            var randomOption = Cypress._.sample(optionValues)
+            var guess = randomOption.substring(0, 4)
+            this.trytestingthislocators.getFlavorInput().clear().type(guess)
 
-            const optionValues = [...options].map(o => o.value);
             const match = optionValues.find(val =>
                 val.toLowerCase().startsWith(guess.toLowerCase())
-            );
+            )
 
             if (match) {
-                this.trytestingthislocators.getFlavorInput().clear().type(match);
+                this.trytestingthislocators.getFlavorInput().clear().type(match)
+                this.trytestingthislocators.getFlavorInput()
+                    .should('have.value', match)
             } else {
-                this.trytestingthislocators.getFlavorInput().clear().type(guess);
+                this.trytestingthislocators.getFlavorInput()
+                    .should('have.value', guess)
             }
-        });
+        })
     }
 
 
     setColorByHex(hexCode) {
         this.trytestingthislocators.getColorInput()
             .invoke('val', hexCode)
-            .trigger('change', { force: true });
+            .trigger('change', { force: true })
+
+        this.trytestingthislocators.getColorInput()
+            .should('have.value', hexCode.toLowerCase())
     }
 
     setColorByRGB(r, g, b) {
-        const hex = this.rgbToHex(r, g, b);
-        this.setColorByHex(hex);
+        var hex = this.rgbToHex(r, g, b)
+        this.setColorByHex(hex)
     }
 
     setRandomColor() {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        this.setColorByRGB(r, g, b);
+        var r = Math.floor(Math.random() * 256)
+        var g = Math.floor(Math.random() * 256)
+        var b = Math.floor(Math.random() * 256)
+        this.setColorByRGB(r, g, b)
     }
 
     rgbToHex(r, g, b) {
-        const toHex = (val) => {
-            const hex = val.toString(16);
-            return hex.length === 1 ? '0' + hex : hex;
-        };
-        return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        var toHex = c => c.toString(16).padStart(2, '0')
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}`
     }
 
-    enterDate(date) {
-        this.trytestingthislocators.getDateField(date)
-            .invoke('val', date)
+    enterRandomDate() {
+        var start = new Date(1947, 0, 1)
+        var end = new Date(2050, 11, 31)
+        var randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+            .toISOString().split('T')[0]
+
+        this.trytestingthislocators.getDateField()
+            .invoke('val', randomDate)
             .trigger('input')
             .trigger('change')
+
+        return randomDate
+    }
+
+    getDateFieldValue() {
+        return this.trytestingthislocators.getDateField()
     }
 
     getRangeSliderValue() {
@@ -132,14 +148,18 @@ export class TryTestingThisActions {
             .invoke('val', slidervalue)
             .trigger('input')
             .trigger('change')
+
+        return this.getRangeSliderValue()
     }
 
     uploadFile(fileToUpload) {
         this.trytestingthislocators.getFileUploadOption().attachFile(fileToUpload)
+        return this.trytestingthislocators.getFileUploadOption()
     }
 
     setQuantity(qty) {
-        this.trytestingthislocators.getQuantity().type(qty)
+        this.trytestingthislocators.getQuantity().clear().type(qty)
+        return this.trytestingthislocators.getQuantity()
     }
 
     clearLongMsgField() {
