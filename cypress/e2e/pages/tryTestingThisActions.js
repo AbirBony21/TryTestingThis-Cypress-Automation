@@ -40,12 +40,27 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getOptionDropdown().select(optionDropdownValue)
     }
 
+    getSelectedDropdownOpt() {
+        return this.trytestingthislocators.getOptionDropdown()
+    }
+
     checkOption(value) {
         this.trytestingthislocators.getCheckboxValue(value).check()
     }
 
     uncheckOption(value) {
         this.trytestingthislocators.getCheckboxValue(value).uncheck()
+    }
+
+    assertCheckboxIsChecked(value) {
+        this.trytestingthislocators.getCheckboxValue(value).should('be.checked')
+    }
+
+    checkMultipleOptions(values) {
+        values.forEach(option => {
+            this.checkOption(option)
+            this.assertCheckboxIsChecked(option)
+        })
     }
 
     findFlavor() {
@@ -252,8 +267,8 @@ export class TryTestingThisActions {
 
     checkDatalistOptions(expectedDatalistOptions) {
         this.trytestingthislocators.getDatalistOptions()
-            .then(options => {
-                const actualOptions = [...options].map(o => o.value.trim())
+            .then($options => {
+                const actualOptions = Cypress._.map($options, 'value')
                 expect(actualOptions).to.have.members(expectedDatalistOptions)
             });
     }
