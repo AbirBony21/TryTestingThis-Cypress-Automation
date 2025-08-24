@@ -11,7 +11,8 @@ var lastname = 'Hossain'
 // var gender = 'Male'
 var optionSelectDropdown = 'Option 3'
 var checkboxValue = 'Option 2'
-var optionsToCheck = ['Option 1', 'Option 3']
+// var optionsToCheck = ['Option 1', 'Option 3']
+var optionsToCheck = []
 var flavor = 'Banana'
 var fileToUpload = 'example.json'
 var dateval = '2025-08-11'
@@ -22,7 +23,7 @@ var username = 'test'
 var password = 'test'
 
 const genderOptions = ['Male', 'Female', 'Other']
-const expectedOptions = ['Option', 'Option 1', 'Option 2', 'Option 3']
+const expectedOptions = ['option', 'option 1', 'option 2', 'option 3']
 const expectedOptionsCb = ['Option 1', 'Option 2', 'Option 3']
 const expectedDatalistOptions = ['Chocolate', 'Vanilla', 'Strawberry', 'Mint', 'Banana']
 
@@ -207,22 +208,22 @@ describe('Elements test', function () {
         }
     })
 
-    it.only('Verify that only one gender can be selected at a time from gender options', () => {
+    it('Verify that only one gender can be selected at a time from gender options', () => {
         var gender = utilities.getRandomValue(genderOptions)
         tryTestingThisActions.selectGender(gender)
 
-        const firstGender = utilities.getRandomValue(genderOptions);
-        tryTestingThisActions.selectGender(firstGender);
-        tryTestingThisActions.assertGenderSelected(firstGender);
+        const firstGender = utilities.getRandomValue(genderOptions)
+        tryTestingThisActions.selectGender(firstGender)
+        tryTestingThisActions.assertGenderSelected(firstGender)
 
-        const remainingGenders = genderOptions.filter(g => g !== firstGender);
-        const secondGender = utilities.getRandomValue(remainingGenders);
-        tryTestingThisActions.selectGender(secondGender);
-        tryTestingThisActions.assertGenderSelected(secondGender);
-        tryTestingThisActions.assertGenderNotSelected(firstGender);
+        const remainingGenders = genderOptions.filter(g => g !== firstGender)
+        const secondGender = utilities.getRandomValue(remainingGenders)
+        tryTestingThisActions.selectGender(secondGender)
+        tryTestingThisActions.assertGenderSelected(secondGender)
+        tryTestingThisActions.assertGenderNotSelected(firstGender)
 
-        const thirdGender = remainingGenders.filter(g => g !== secondGender)[0];
-        tryTestingThisActions.assertGenderNotSelected(thirdGender);
+        const thirdGender = remainingGenders.filter(g => g !== secondGender)[0]
+        tryTestingThisActions.assertGenderNotSelected(thirdGender)
     })
 
     it('Verify that "Option" dropdown loads valid options', () => {
@@ -230,24 +231,31 @@ describe('Elements test', function () {
     })
 
     it('Verify that an option can be selected from dropdown', () => {
-        var randomOption = utilities.getRandomValue(expectedOptions);
+        var randomOption = utilities.getRandomValue(expectedOptions)
         tryTestingThisActions.selectOptionDropdown(randomOption)
+        tryTestingThisActions.getSelectedDropdownOpt().should('have.value', randomOption)
     })
 
     it('Verify Checkbox functionality for applicable Options', () => {
-        var randomOption = utilities.getRandomValue(expectedOptionsCb);
+        var randomOption = utilities.getRandomValue(expectedOptionsCb)
         tryTestingThisActions.checkOption(randomOption)
+        tryTestingThisActions.assertCheckboxIsChecked(randomOption)
     })
+    // continue from here
 
     it('Verify that multiple options can be checked for applicable Options', () => {
-        optionsToCheck.forEach(checkboxOptionValue => {
-            cy.then(() => {
-                tryTestingThisActions.checkOption(checkboxOptionValue)
-            })
-        });
+
+        var twoOrThree = utilities.getRandomNumber(2,3)
+        if (twoOrThree == 2) {
+            optionsToCheck = Cypress._.sampleSize(expectedOptionsCb,2)
+        } else {
+            optionsToCheck = [...expectedOptionsCb]
+        }
+
+        tryTestingThisActions.checkMultipleOptions(optionsToCheck)
     })
 
-    it('Verify that datalist input dropdown shows valid suggestions', () => {
+    it.only('Verify that datalist input dropdown shows valid suggestions', () => {
         tryTestingThisActions.checkDatalistOptions(expectedDatalistOptions)
     })
 
