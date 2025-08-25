@@ -170,6 +170,18 @@ export class TryTestingThisActions {
         this.trytestingthislocators.getLongMsg().type(longmsg)
     }
 
+    assertLongMsgField(expectedMsg) {
+        this.trytestingthislocators.getLongMsg().should('have.value', expectedMsg)
+    }
+
+    assertLongMsgLength(minLength) {
+        this.trytestingthislocators.getLongMsg()
+            .invoke('val')
+            .then(text => {
+                expect(text.length).to.be.greaterThan(minLength)
+            })
+    }
+
     clickOnAlertButton() {
         this.trytestingthislocators.getAlertBtn().click()
     }
@@ -249,7 +261,7 @@ export class TryTestingThisActions {
     stubWindowOpen() {
         cy.window().then(win => {
             cy.stub(win, 'open').as('windowOpen');
-        });
+        })
     }
 
     checkWindowOpenCalledWith(url, tab) {
@@ -258,39 +270,39 @@ export class TryTestingThisActions {
 
     assertGenderSelected(gender) {
         if (gender === 'Male') {
-            this.trytestingthislocators.getMaleRadioBtn().should('be.checked');
+            this.trytestingthislocators.getMaleRadioBtn().should('be.checked')
         } else if (gender === 'Female') {
-            this.trytestingthislocators.getFemaleRadioBtn().should('be.checked');
+            this.trytestingthislocators.getFemaleRadioBtn().should('be.checked')
         } else {
-            this.trytestingthislocators.getOtherRadioBtn().should('be.checked');
+            this.trytestingthislocators.getOtherRadioBtn().should('be.checked')
         }
     }
 
     assertGenderNotSelected(gender) {
         if (gender === 'Male') {
-            this.trytestingthislocators.getMaleRadioBtn().should('not.be.checked');
+            this.trytestingthislocators.getMaleRadioBtn().should('not.be.checked')
         } else if (gender === 'Female') {
-            this.trytestingthislocators.getFemaleRadioBtn().should('not.be.checked');
+            this.trytestingthislocators.getFemaleRadioBtn().should('not.be.checked')
         } else {
-            this.trytestingthislocators.getOtherRadioBtn().should('not.be.checked');
+            this.trytestingthislocators.getOtherRadioBtn().should('not.be.checked')
         }
     }
 
     checkDropdownOptions(expectedOptions) {
         this.trytestingthislocators.getOptionDropdown()
             .find('option')
-            .then(options => {
-                const actualOptions = [...options].map(o => o.text.trim())
+            .then($options => {
+                var actualOptions = Cypress._.map($options, 'value')
                 expect(actualOptions).to.have.members(expectedOptions)
-            });
+            })
     }
 
     checkDatalistOptions(expectedDatalistOptions) {
         this.trytestingthislocators.getDatalistOptions()
             .then($options => {
-                const actualOptions = Cypress._.map($options, 'value')
+                var actualOptions = Cypress._.map($options, 'value')
                 expect(actualOptions).to.have.members(expectedDatalistOptions)
-            });
+            })
     }
 
     checkCurrentURL(expectedURL) {
