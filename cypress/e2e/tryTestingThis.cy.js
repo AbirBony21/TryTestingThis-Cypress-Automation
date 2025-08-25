@@ -8,16 +8,8 @@ const tryTestingThisActions = new TryTestingThisActions()
 
 var firstname = 'Md. Abir'
 var lastname = 'Hossain'
-// var gender = 'Male'
-var optionSelectDropdown = 'Option 3'
-var checkboxValue = 'Option 2'
-// var optionsToCheck = ['Option 1', 'Option 3']
 var optionsToCheck = []
-var flavor = 'Banana'
 var fileToUpload = 'example.json'
-// var dateval = '2025-08-11'
-// var qty = 3
-var longmsg = 'SQA stands for Software Quality Assurance'
 
 var username = 'test'
 var password = 'test'
@@ -26,6 +18,7 @@ const genderOptions = ['Male', 'Female', 'Other']
 const expectedOptions = ['option', 'option 1', 'option 2', 'option 3']
 const expectedOptionsCb = ['Option 1', 'Option 2', 'Option 3']
 const expectedDatalistOptions = ['Chocolate', 'Vanilla', 'Strawberry', 'Mint', 'Banana']
+const expectedTableHeaders = ["Firstname", "Lastname", "Gender", "Age", "Occupation"]
 
 // describe('End to End Full Journey', function () {
 
@@ -133,7 +126,6 @@ describe('Elements test', function () {
 
     it('Verify that login section takes Username and Password as input', () => {
         tryTestingThisActions.controlLeftDivScroll('bottom')
-        // cy.scrollTo('center')
         tryTestingThisActions.enterUsername(username)
         tryTestingThisActions.enterPassword(password)
         tryTestingThisActions.getUsernameInputText()
@@ -333,8 +325,32 @@ describe('Elements test', function () {
         tryTestingThisActions.checkDescriptionDate(expectedDate)
     })
 
+    it('Verify that table headers are correct', () => {
+        tryTestingThisActions.checkHeaders(expectedTableHeaders)
+    })
 
+    it('Verify that table contains exactly 6 rows of data', () => {
+        tryTestingThisActions.checkRowCount(6)
+    })
 
+    it('Verify that table contains exactly 5 columns', () => {
+        tryTestingThisActions.checkColumnCount(5)
+    })
 
+    it('Verify that gender column only contains M, F or O', () => {
+        tryTestingThisActions.checkGenderValues()
+    })
+
+    it('Verify that age column contains values within 25 to 30', () => {
+        tryTestingThisActions.checkAgeRange(25, 30)
+    })
+
+    it('Verify that all table rows match expected data', () => {
+        cy.fixture('tableData.json').then((rows) => {
+            rows.forEach(row => {
+                tryTestingThisActions.checkRowData(row)
+            })
+        })
+    })
 
 })

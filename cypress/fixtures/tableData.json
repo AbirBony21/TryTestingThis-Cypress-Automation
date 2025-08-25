@@ -1,0 +1,44 @@
+[
+  {
+    "firstname": "Monika",
+    "lastname": "Geller",
+    "gender": "F",
+    "age": 27,
+    "occupation": "Chef"
+  },
+  {
+    "firstname": "Pheobe",
+    "lastname": "Buffay",
+    "gender": "F",
+    "age": 27,
+    "occupation": "Singer"
+  },
+  {
+    "firstname": "Joey",
+    "lastname": "Tribbiani",
+    "gender": "M",
+    "age": 28,
+    "occupation": "Actor"
+  },
+  {
+    "firstname": "Chanandler",
+    "lastname": "Bong",
+    "gender": "O",
+    "age": 28,
+    "occupation": "Transponster"
+  },
+  {
+    "firstname": "Ross",
+    "lastname": "Geller",
+    "gender": "M",
+    "age": 29,
+    "occupation": "Paleontogist"
+  },
+  {
+    "firstname": "Rachel",
+    "lastname": "Green",
+    "gender": "F",
+    "age": 27,
+    "occupation": "Personal Shopper"
+  }
+]
