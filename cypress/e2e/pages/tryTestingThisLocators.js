@@ -125,4 +125,20 @@ export class TryTestingThisLocators {
         return cy.get('.main > h5')
     }
 
+    getTable() {
+        return cy.get('fieldset table');
+    }
+
+    getTableHeaders() {
+        return this.getTable().find('th')
+    }
+
+    getTableRows() {
+        return this.getTable().find('tbody tr')
+    }
+
+    getRowCells(rowIndex) {
+        return this.getTable().find('tbody tr').eq(rowIndex).find('td')
+    }
+
 }

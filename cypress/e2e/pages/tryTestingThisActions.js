@@ -318,4 +318,53 @@ export class TryTestingThisActions {
             })
     }
 
+    checkHeaders(expectedHeaders) {
+        this.trytestingthislocators.getTableHeaders().then($headers => {
+            const actualHeaders = [...$headers].map(h => h.innerText.trim())
+            expect(actualHeaders).to.deep.equal(expectedHeaders)
+        })
+    }
+
+    checkRowCount(expectedCount) {
+        this.trytestingthislocators.getTableRows().should('have.length', expectedCount + 1)
+    }
+
+    checkColumnCount(expectedCount) {
+        this.trytestingthislocators.getTableHeaders().should('have.length', expectedCount)
+    }
+
+    checkGenderValues() {
+        this.trytestingthislocators.getTableRows().each(($row, index) => {
+            if (index === 0) return
+            cy.wrap($row).find('td').eq(2).invoke('text').then(gender => {
+                expect(['M', 'F', 'O']).to.include(gender.trim())
+            })
+        })
+    }
+
+    checkAgeRange(min, max) {
+        this.trytestingthislocators.getTableRows().each(($row, index) => {
+            if (index === 0) return
+            cy.wrap($row).find('td').eq(3).invoke('text').then(age => {
+                const ageNum = parseInt(age.trim(), 10)
+                expect(ageNum).to.be.within(min, max)
+            })
+        })
+    }
+
+    checkRowData(expectedData) {
+    this.trytestingthislocators.getTableRows().each(($row, index) => {
+        if (index === 0) return
+
+        cy.wrap($row).find('td').eq(0).invoke('text').then(firstname => {
+            if (firstname.trim() === expectedData.firstname) {
+                cy.wrap($row).find('td').eq(1).invoke('text').should('eq', expectedData.lastname)
+                cy.wrap($row).find('td').eq(2).invoke('text').should('eq', expectedData.gender)
+                cy.wrap($row).find('td').eq(3).invoke('text').should('eq', expectedData.age.toString())
+                cy.wrap($row).find('td').eq(4).invoke('text').should('eq', expectedData.occupation)
+            }
+        })
+    })
+}
+
 }
