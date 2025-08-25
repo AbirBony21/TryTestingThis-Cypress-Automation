@@ -37,7 +37,7 @@ export class TryTestingThisLocators {
     }
 
     getDatalistOptions() {
-        return cy.get('#datalists').find('option');
+        return cy.get('#datalists').find('option')
     }
 
 

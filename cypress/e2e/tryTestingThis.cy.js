@@ -199,13 +199,7 @@ describe('Elements test', function () {
     it('Validate radio button functionality for gender selection', () => {
         var gender = utilities.getRandomValue(genderOptions)
         tryTestingThisActions.selectGender(gender)
-        if (gender === 'Male') {
-            tryTestingThisActions.assertMaleRadioBtn()
-        } else if (gender === 'Female') {
-            tryTestingThisActions.assertFemaleRadioBtn()
-        } else {
-            tryTestingThisActions.assertOtherRadioBtn()
-        }
+        tryTestingThisActions.assertGenderSelected(gender)
     })
 
     it('Verify that only one gender can be selected at a time from gender options', () => {
@@ -241,7 +235,6 @@ describe('Elements test', function () {
         tryTestingThisActions.checkOption(randomOption)
         tryTestingThisActions.assertCheckboxIsChecked(randomOption)
     })
-    // continue from here
 
     it('Verify that multiple options can be checked for applicable Options', () => {
 
@@ -300,7 +293,7 @@ describe('Elements test', function () {
             .should('have.value', `C:\\fakepath\\${fileToUpload}`)
     })
 
-    it.only('Verify that Quantity input field accepts integer values from 1 to 5', () => {
+    it('Verify that Quantity input field accepts integer values from 1 to 5', () => {
 
         var qty = utilities.getRandomNumber(1, 5)
         tryTestingThisActions.setQuantity(qty)
@@ -314,6 +307,8 @@ describe('Elements test', function () {
         var longMessage = utilities.generateRandomText(msglength)
         tryTestingThisActions.clearLongMsgField()
         tryTestingThisActions.enterLongMsg(longMessage)
+        tryTestingThisActions.assertLongMsgField(longMessage)
+        tryTestingThisActions.assertLongMsgLength(255)
     })
 
     it('Verify that clicking "Submit" button opens a new google search tab', () => {
