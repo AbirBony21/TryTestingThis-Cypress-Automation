@@ -20,70 +20,6 @@ const expectedOptionsCb = ['Option 1', 'Option 2', 'Option 3']
 const expectedDatalistOptions = ['Chocolate', 'Vanilla', 'Strawberry', 'Mint', 'Banana']
 const expectedTableHeaders = ["Firstname", "Lastname", "Gender", "Age", "Occupation"]
 
-// describe('End to End Full Journey', function () {
-
-//     beforeEach(function () {
-//         cy.visit('https://trytestingthis.netlify.app/')
-//     })
-
-//     it('Form Filling and Submission', () => {
-
-//         tryTestingThisActions.clickContactPage()
-//         tryTestingThisActions.clickHomepage()
-//         tryTestingThisActions.enterFirstName(firstname)
-//         tryTestingThisActions.enterLastname(lastname)
-//         tryTestingThisActions.selectGender(gender)
-//         tryTestingThisActions.selectOptionDropdown(optionSelectDropdown)
-
-//         //Single option check-uncheck
-//         tryTestingThisActions.checkOption(checkboxValue)
-//         cy.wait(3000)
-//         tryTestingThisActions.uncheckOption(checkboxValue)
-
-//         //For Multiple Selections
-//         optionsToCheck.forEach(checkboxOptionValue => {
-//             cy.then(() => {
-//                 tryTestingThisActions.checkOption(checkboxOptionValue)
-//             })
-//         });
-
-//         tryTestingThisActions.selectFlavor(flavor)
-
-//         tryTestingThisActions.setColorByHex('#ff5733')
-//         cy.wait(2000)
-//         tryTestingThisActions.setColorByRGB(0, 145, 240)
-//         cy.wait(2000)
-//         tryTestingThisActions.setRandomColor()
-
-//         tryTestingThisActions.enterDate(dateval)
-//         tryTestingThisActions.setRangeSlider(67)
-
-//         tryTestingThisActions.uploadFile(fileToUpload)
-//         tryTestingThisActions.setQuantity(qty)
-//         tryTestingThisActions.clearLongMsgField()
-//         tryTestingThisActions.enterLongMsg(longmsg)
-
-//         tryTestingThisActions.clickOnAlertButton()
-
-//         tryTestingThisActions.clickOnDblButton()
-//         tryTestingThisActions.controlLeftDivScroll('top')
-//         tryTestingThisActions.findPhoto()
-//         tryTestingThisActions.controlLeftDivScroll('center')
-//         tryTestingThisActions.dragAndDropImg('#div1')
-
-//         tryTestingThisActions.clickOnSubmitBtn()
-//     })
-
-//     it('Successful Login Journey', () => {
-
-//         tryTestingThisActions.enterUsername(username)
-//         tryTestingThisActions.enterPassword(password)
-//         tryTestingThisActions.clickOnLoginBtn()
-//         tryTestingThisActions.clickHomepage()
-
-//     })
-
-// })
 
 describe('Elements test', function () {
 
@@ -96,10 +32,6 @@ describe('Elements test', function () {
         tryTestingThisActions.clickOnAlertButton()
         tryTestingThisActions.getAlertMessage().should('have.text', 'You Pressed the OK Button!')
     })
-
-    // it('Verify Cancel Button action for Sample Alert Button', ()=> {
-
-    // })
 
     it('Verify that the image is fetched to the webpage', () => {
         tryTestingThisActions.findPhoto()
@@ -143,7 +75,7 @@ describe('Elements test', function () {
             .should('contains.text', 'Login Successful :)')
     })
 
-    it('Verify that invalid credentials prevent login and refreshes page', () => {
+    it('Validate that invalid credentials prevent login and refreshes page', () => {
 
         tryTestingThisActions.controlLeftDivScroll('bottom')
         const invalidCred = [
@@ -212,7 +144,7 @@ describe('Elements test', function () {
         tryTestingThisActions.assertGenderNotSelected(thirdGender)
     })
 
-    it('Verify that "Option" dropdown loads valid options', () => {
+    it('Validate that "Option" dropdown loads valid options', () => {
         tryTestingThisActions.checkDropdownOptions(expectedOptions)
     })
 
@@ -248,12 +180,12 @@ describe('Elements test', function () {
         tryTestingThisActions.selectFlavorByPartial()
     })
 
-    it('Verify color picking by HEX input', () => {
+    it('Validate color picking by HEX input', () => {
         var hexCode = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
         tryTestingThisActions.setColorByHex(hexCode);
     })
 
-    it('Verify that input RGB values are accepted for picking color', () => {
+    it('Validate that input RGB values are accepted for picking color', () => {
         var red = utilities.getRandomNumber(0, 255)
         var green = utilities.getRandomNumber(0, 255)
         var blue = utilities.getRandomNumber(0, 255)
@@ -264,7 +196,7 @@ describe('Elements test', function () {
     //     tryTestingThisActions.setRandomColor()
     // })
 
-    it('Verify Date picker functionality', () => {
+    it('Validate Date picker functionality', () => {
         var randomDate = tryTestingThisActions.enterRandomDate()
         tryTestingThisActions.getDateFieldValue()
             .should('have.value', randomDate)
@@ -274,27 +206,25 @@ describe('Elements test', function () {
         tryTestingThisActions.getRangeSliderValue().should('equal', '50')
     })
 
-    it('Verify that range slider accepts values from 0 to 100', () => {
+    it('Validate that range slider accepts values from 0 to 100', () => {
         var randomNum = utilities.getRandomNumber(0, 100)
-        var valSlider = tryTestingThisActions.setRangeSlider(randomNum)
-        tryTestingThisActions.getRangeSliderValue().should('equal', String(randomNum))
+        tryTestingThisActions.setRangeSlider(randomNum)
+            .should('equal', String(randomNum))
     })
 
-    it('Verify file upload functionality of the form', () => {
+    it('Validate file upload functionality of the form', () => {
         tryTestingThisActions.uploadFile(fileToUpload)
             .should('have.value', `C:\\fakepath\\${fileToUpload}`)
     })
 
-    it('Verify that Quantity input field accepts integer values from 1 to 5', () => {
+    it('Validate that Quantity input field accepts integer values from 1 to 5', () => {
 
         var qty = utilities.getRandomNumber(1, 5)
         tryTestingThisActions.setQuantity(qty)
             .should('have.value', String(qty))
     })
 
-    //continue from here
-
-    it('Verify that long message field can take more than 255 characters as input', () => {
+    it('Validate that long message field can take more than 255 characters as input', () => {
         var msglength = utilities.getRandomNumber(256, 400)
         var longMessage = utilities.generateRandomText(msglength)
         tryTestingThisActions.clearLongMsgField()
@@ -320,32 +250,32 @@ describe('Elements test', function () {
     })
 
     //Layout Three
-    it('Verify that Date is shown correctly in table description', () => {
+    it('Validate that Date is shown correctly in table description', () => {
         var expectedDate = 'Sep 2, 2017'
         tryTestingThisActions.checkDescriptionDate(expectedDate)
     })
 
-    it('Verify that table headers are correct', () => {
+    it('Validate that table headers are correct', () => {
         tryTestingThisActions.checkHeaders(expectedTableHeaders)
     })
 
-    it('Verify that table contains exactly 6 rows of data', () => {
+    it('Validate that table contains exactly 6 rows of data', () => {
         tryTestingThisActions.checkRowCount(6)
     })
 
-    it('Verify that table contains exactly 5 columns', () => {
+    it('Validate that table contains exactly 5 columns', () => {
         tryTestingThisActions.checkColumnCount(5)
     })
 
-    it('Verify that gender column only contains M, F or O', () => {
+    it('Validate that gender column only contains M, F or O', () => {
         tryTestingThisActions.checkGenderValues()
     })
 
-    it('Verify that age column contains values within 25 to 30', () => {
+    it('Validate that age column contains values within 25 to 30', () => {
         tryTestingThisActions.checkAgeRange(25, 30)
     })
 
-    it('Verify that all table rows match expected data', () => {
+    it('Validate that all table rows match expected data', () => {
         cy.fixture('tableData.json').then((rows) => {
             rows.forEach(row => {
                 tryTestingThisActions.checkRowData(row)
