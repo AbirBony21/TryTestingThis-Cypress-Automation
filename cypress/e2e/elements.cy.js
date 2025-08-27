@@ -66,6 +66,15 @@ describe('Elements test', function () {
             .should('have.value', password)
     })
 
+    it('Verify that the characters entered into the Password field are masked', () => {
+
+        tryTestingThisActions.controlLeftDivScroll('bottom')
+        tryTestingThisActions.enterPassword(password)
+        tryTestingThisActions.getPasswordInputText()
+            .should('have.attr', 'type', 'password')
+    })
+
+
     it('Verify Successful Login with valid credentials', () => {
         tryTestingThisActions.controlLeftDivScroll('bottom')
         tryTestingThisActions.enterUsername(username)
@@ -178,6 +187,12 @@ describe('Elements test', function () {
 
     it('Verify that partially given input is guessed correctly in Datalist', () => {
         tryTestingThisActions.selectFlavorByPartial()
+    })
+
+    it('Verify that alert popup appears when invalid datalist value is entered', () => {
+        var flavourChar = utilities.getRandomNumber(1, 10)
+        var wrongFlavour = utilities.generateRandomText(flavourChar)
+        tryTestingThisActions.enterWrongFlavor(wrongFlavour)
     })
 
     it('Validate color picking by HEX input', () => {
