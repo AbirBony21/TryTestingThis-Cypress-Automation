@@ -67,6 +67,25 @@ export class TryTestingThisActions {
         return this.trytestingthislocators.getFlavorInput()
     }
 
+    handleDatalistAlertPopup() {
+        var alertShown = false
+        cy.on('window:alert', (txt) => {
+            alertShown = true
+            expect(txt).to.equal('Enter correct flavour input.')
+        })
+
+        cy.then(() => {
+            if (!alertShown) {
+                throw new Error("BUG: No alert appeared when invalid datalist value was entered")
+            }
+        })
+    }
+
+    enterWrongFlavor(flavor) {
+        this.trytestingthislocators.getFlavorInput().clear().type(flavor)
+        this.handleDatalistAlertPopup()
+    }
+
     selectFlavor(flavor) {
         this.trytestingthislocators.getFlavorInput().type(flavor)
     }
@@ -184,12 +203,6 @@ export class TryTestingThisActions {
 
     clickOnAlertButton() {
         this.trytestingthislocators.getAlertBtn().click()
-    }
-
-    handleAlertPopup() {
-        cy.on('window:alert', (txt) => {
-            expect(txt).to.equal('Press a button!')
-        });
     }
 
     getAlertMessage() {
@@ -353,18 +366,18 @@ export class TryTestingThisActions {
     }
 
     checkRowData(expectedData) {
-    this.trytestingthislocators.getTableRows().each(($row, index) => {
-        if (index === 0) return
+        this.trytestingthislocators.getTableRows().each(($row, index) => {
+            if (index === 0) return
 
-        cy.wrap($row).find('td').eq(0).invoke('text').then(firstname => {
-            if (firstname.trim() === expectedData.firstname) {
-                cy.wrap($row).find('td').eq(1).invoke('text').should('eq', expectedData.lastname)
-                cy.wrap($row).find('td').eq(2).invoke('text').should('eq', expectedData.gender)
-                cy.wrap($row).find('td').eq(3).invoke('text').should('eq', expectedData.age.toString())
-                cy.wrap($row).find('td').eq(4).invoke('text').should('eq', expectedData.occupation)
-            }
+            cy.wrap($row).find('td').eq(0).invoke('text').then(firstname => {
+                if (firstname.trim() === expectedData.firstname) {
+                    cy.wrap($row).find('td').eq(1).invoke('text').should('eq', expectedData.lastname)
+                    cy.wrap($row).find('td').eq(2).invoke('text').should('eq', expectedData.gender)
+                    cy.wrap($row).find('td').eq(3).invoke('text').should('eq', expectedData.age.toString())
+                    cy.wrap($row).find('td').eq(4).invoke('text').should('eq', expectedData.occupation)
+                }
+            })
         })
-    })
-}
+    }
 
 }
