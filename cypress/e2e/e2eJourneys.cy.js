@@ -26,7 +26,7 @@ describe('End to End Full Journeys', function () {
         cy.visit('https://trytestingthis.netlify.app/')
     })
 
-    it('Form Filling and Submission', () => {
+    it('Verify successful form submission journey', () => {
         tryTestingThisActions.enterFirstName(firstname)
         tryTestingThisActions.enterLastname(lastname)
 
@@ -69,7 +69,7 @@ describe('End to End Full Journeys', function () {
 
     })
 
-    it('Successful Login Journey', () => {
+    it('Validate successful login journey', () => {
 
         tryTestingThisActions.controlLeftDivScroll('bottom')
         tryTestingThisActions.enterUsername(username)
