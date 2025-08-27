@@ -4,7 +4,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "hello": "echo Hello World",
+
+    "allureClear": "rimraf allure-results allure-report",
+    "cyRunAllure": "cypress run --env allure=true",
+    "allureReport": "allure generate allure-results --clean -o allure-report",
+    "allureOpen": "allure open allure-report",
+
+    "testAllure": "npm run allureClear && npm run cyRunAllure && npm run allureReport && npm run allureOpen",
     "cy-test": "cypress run"
   },
   "keywords": [],
@@ -17,6 +23,9 @@
   },
   "devDependencies": {
     "@4tw/cypress-drag-drop": "^2.3.0",
-    "cypress-file-upload": "^5.0.8"
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "allure-commandline": "^2.34.1",
+    "cypress-file-upload": "^5.0.8",
+    "rimraf": "^6.0.1"
   }
 }
